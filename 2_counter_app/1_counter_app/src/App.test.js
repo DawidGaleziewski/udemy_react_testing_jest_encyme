@@ -33,9 +33,41 @@ test("render counter display", () => {
 })
 
 test('counter starts at 0', ()=> {
-
+  const wrapper = setup()
+  // Stores text of the node
+  const count = findByTestAttr(wrapper, 'count').text()
+  expect(count).toBe("0")
 })
 
 test('clicking on the button increments counter display', ()=> {
+  const wrapper = setup()
+  // Find button
+  const button = findByTestAttr(wrapper, 'button')
 
+  // Click Button
+  // We use simulate method
+  button.simulate('click')
+
+  // Find display
+  const count = findByTestAttr(wrapper, 'count').text()
+
+  // Make sure display matches
+  expect(count).toBe("1")
+})
+
+test("click on the decrament button decraments the counter display", ()=>{
+  const wrapper = setup();
+ 
+  // const buttonIncrement = findByTestAttr(wrapper, 'button')
+  findByTestAttr(wrapper, 'button').simulate('click')
+  findByTestAttr(wrapper, 'button').simulate('click')
+  findByTestAttr(wrapper, 'button').simulate('click')
+  // const buttonDecrament = findByTestAttr(wrapper,'decrament-button')
+  findByTestAttr(wrapper, 'decrament-button').simulate('click')
+  // buttonDecrament.simulate('click');
+  // clickMultipleTimes()
+  
+  const count = findByTestAttr(wrapper, 'count').text()
+
+  expect(count).toBe("2")
 })
