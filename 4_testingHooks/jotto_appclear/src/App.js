@@ -4,16 +4,16 @@ import './App.css';
 import GuessedWords from './GuessedWords/GuessedWords';
 import Congrats from './Congrats/Congrats'
 
-class App extends Component {
-  render(){
+const App = () => {
+
     return (
-      <div className="container">
+      <div data-test="component-app" className="container">
         <h1>Jotto</h1>
         <Congrats success={true} />
         <GuessedWords GuessedWords={[{guessedWord: 'train', letterMatchCount: 3}]} />
       </div>    
     );
-  }
+  
   
 }
 
