@@ -19,23 +19,30 @@ test('component accepts correct prop types', ()=> {
 })
 
 describe('state controlled input field', ()=> {
-    test('state updates with value of input box upon change', ()=> {
-        const mockSetCurrentGuess = jest.fn();
-        // We replace useState with another mock
-        // This function, when test runs will replace the hook returning intialState and setState function to our custome ones
+    // Scope mock set current guess so it is available to before each function. We want to set it as jest.fn and then clear it before each run
+    let mockSetCurrentGuess = jest.fn();
+    beforeEach(() => {
+        mockSetCurrentGuess.mockClear();
         React.useState = jest.fn(()=> ["", mockSetCurrentGuess])
+    })
+
+    test('state updates with value of input box upon change', ()=> {
+
 
         const wrapper = setup();
         const inputBox = findByTestAttr(wrapper, 'input-box');
 
-        //  We create a mock event that will simulate the change on the form
         const mockEvent = {target: {value: 'train'}};
-        //  Then we simulate the input box getting a value of 'train'
         inputBox.simulate("change", mockEvent);
 
-        // We can check if our mock function have been called with the correct value
         expect(mockSetCurrentGuess).toHaveBeenCalledWith('train')
+    })
 
-        // Function should go red with "Number of calls: 0" as the function was not called
+    test('on submit state is cleared', ()=> {
+        
+        const wrapper = setup();
+        const inputButton = findByTestAttr(wrapper, 'submit-button');
+        inputButton.simulate('click', {preventDefault: () => null});
+        expect(mockSetCurrentGuess).toHaveBeenCalledWith("")
     })
 })
