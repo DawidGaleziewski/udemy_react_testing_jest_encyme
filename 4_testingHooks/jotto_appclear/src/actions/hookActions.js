@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 export const getSecretWord = async (setSecretWord) => {
-    const response = await axios.get('http://localhost:3030');
-    setSecretWord(response.data)
+    const {data:{title}} = await axios.get('https://jsonplaceholder.typicode.com/todos/2');
+    setSecretWord(title)
 }
 
 //  default export for mocking
